@@ -32,6 +32,10 @@ from libqtile.utils import guess_terminal
 mod = "mod4"
 terminal = guess_terminal()
 
+dmenu_background = "#181825" # catppuccin mantle
+dmenu_highlight = "#fab387"  # catppuccin peach
+dmenu_fontsize = "22"
+
 import os
 import subprocess
 from libqtile import hook
@@ -76,7 +80,7 @@ keys = [
     Key([mod, "shift"], "d", lazy.spawn("discord"), desc="Launch Discord"),
     # Key([mod], "e", lazy.spawn("dolphin --platformtheme qt5ct"), desc="Launch dolphin"),
     Key([mod], "e", lazy.spawn("nautilus"), desc="Launch nautilus"),
-    Key([mod], "r", lazy.spawn("dmenu_run -nb '#282A2E' -sf '#282A2E' -fn 'Inconsolata Nerd Font:pixelsize=18'"), desc="Open dmenu"),
+    Key([mod], "r", lazy.spawn(f"dmenu_run -nb '{dmenu_background}' -sb '{dmenu_highlight}' -sf '#282A2E' -fn 'Inconsolata Nerd Font:pixelsize={dmenu_fontsize}'"), desc="Open dmenu"),
 
     Key([mod], "s", lazy.spawn("flameshot gui"), desc="launch snipping tool"),
     # Toggle between split and unsplit sides of stack.
