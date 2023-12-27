@@ -8,15 +8,23 @@ killall -q polybar
 while pgrep -u $UID -x polybar > /dev/null; do sleep 1; done
 
 # Launch Polybar, using default config location ~/.config/polybar/config.ini
-polybar MAIN 2>&1 | tee -a /tmp/polybar.log & disown
-polybar secondary 2>&1 | tee -a /tmp/polybar.log & disown
-polybar laptop 2>&1 | tee -a /tmp/polybar.log & disown
-
-polybar MAIN2 2>&1 | tee -a /tmp/polybar.log & disown
-polybar secondary2 2>&1 | tee -a /tmp/polybar.log & disown
-polybar laptop2 2>&1 | tee -a /tmp/polybar.log & disown
+#polybar MAIN 2>&1 | tee -a /tmp/polybar.log & disown
+#polybar secondary 2>&1 | tee -a /tmp/polybar.log & disown
+#polybar laptop 2>&1 | tee -a /tmp/polybar.log & disown
+#
+#polybar MAIN2 2>&1 | tee -a /tmp/polybar.log & disown
+#polybar secondary2 2>&1 | tee -a /tmp/polybar.log & disown
+#polybar laptop2 2>&1 | tee -a /tmp/polybar.log & disown
 
 echo "Polybar launched..."
+
+if type "xrandr"; then
+  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+    MONITOR=$m polybar --reload main &
+  done
+else
+  polybar --reload main &
+fi
 
 #if type "xrandr"; then
 #  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do

@@ -31,6 +31,7 @@ white=#ffffff
 [global/wm]
 margin-top = 0
 margin-bottom = 0
+include-file = $HOME/.config/polybar/catppuccin/themes/mocha.ini
 
 [bar/MAIN]
 monitor = ${env:MONITOR:DP-1-1}
@@ -343,7 +344,8 @@ tray-scale = 1.0
 ; override-redirect = true
 
 
-
+; updated 25/12/23
+; TODO: updates others accordingly
 [bar/laptop2]
 width = 100%
 height = 20pt
@@ -351,13 +353,14 @@ radius = 0
 
 ; dpi = 96
 
-background = ${colors.background}
+background = ${colors.mantle}
 foreground = ${colors.foreground}
 
 line-size = 3pt
 
 border-size = 0pt
-border-color = #00000000
+;border-color = #00000000
+border-color = ${colors.crust}
 
 padding-left = 0
 padding-right = 1
@@ -370,7 +373,7 @@ separator-foreground = ${colors.disabled}
 font-0 = Inconsolata Nerd Font:style=Bold
 
 modules-left = xworkspaces xwindow
-modules-right = filesystem pulseaudio eth wlan xkeyboard battery memory cpu date
+modules-right = eth wlan cpu memory filesystem xkeyboard pulseaudio battery date
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -384,7 +387,7 @@ tray-detached = false
 tray-maxsize = 16
 
 ; Background color for the tray container 
-tray-background = ${colors.background}
+tray-background = ${colors.mantle}
 
 ; Foreground color for the tray icons
 tray-foreground = ${colors.foreground}
@@ -410,19 +413,37 @@ monitor = ${env:MONITOR:eDP-1-2}
 [module/battery]
 type = internal/battery
 
+
 battery = BAT1
 adapter = AC
 
 full-at = 100
 
-label-full = %percentage%%
-format-full = <label-full>  
+label-full = "Full  "
+; #a6e3a1 | colors.green
+format-full = %{F#a6e3a1}<label-full>%{F-}
 
 label-charging = %percentage%% 
-format-charging = <label-charging>  
+format-charging = <label-charging><animation-charging>
 
 label-discharging = %percentage%% 
-format-discharging = <label-discharging>  
+format-discharging = <label-discharging><ramp-capacity>
+
+ramp-capacity-foreground = ${colors.pink}
+
+ramp-capacity-0 = "  "
+ramp-capacity-1 = "  "
+ramp-capacity-2 = "  "
+ramp-capacity-3 = "  "
+ramp-capacity-4 = "  "
+
+animation-charging-foreground = ${colors.pink}
+
+animation-charging-0 = "  "
+animation-charging-1 = "  "
+animation-charging-2 = "  "
+animation-charging-3 = "  "
+animation-charging-4 = "  "
 
 [module/xworkspaces]
 type = internal/xworkspaces
@@ -435,7 +456,7 @@ index-sort = true
 
 label-active = %name%
 label-active-background = ${colors.background-alt}
-label-active-underline= ${colors.violet}
+label-active-underline= ${colors.flamingo}
 label-active-padding = 1
 
 label-occupied = %name%
@@ -464,7 +485,10 @@ interval = 25
 
 mount-0 = /home
 
-label-mounted = %{F#F0C674}%mountpoint%%{F-} %percentage_used%%
+; should figure out a way to change colors
+; without such ugly formatting
+; #cba6f7 | colors.mauve
+label-mounted = %{F#cba6f7}%mountpoint%%{F-} %percentage_used%%
 
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.disabled}
@@ -472,14 +496,21 @@ label-unmounted-foreground = ${colors.disabled}
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume-prefix = "󰋋 "
-format-volume-prefix-foreground = ${colors.primary}
-format-volume = <label-volume>
+; format-volume-prefix = "%{F#b4befe}"
+; format-volume-prefix-foreground = ${colors.yellow}
+format-volume = <ramp-volume> <label-volume>
+ramp-volume-foreground = ${colors.yellow}
 
 label-volume = %percentage%%
 
-label-muted = muted
+label-muted = "󰸈 muted"
 label-muted-foreground = ${colors.disabled}
+
+; ramp-signal-0 = "%{F#b4befe}󰤯 %{F-}"
+
+ramp-volume-0 = "󰕿 "
+ramp-volume-1 = "󰖀 "
+ramp-volume-2 = "󰕾 "
 
 click-right = pavucontrol
 
@@ -488,7 +519,7 @@ type = internal/xkeyboard
 blacklist-0 = num lock
 
 label-layout = %layout%
-label-layout-foreground = ${colors.reddish}
+label-layout-foreground = ${colors.sky}
 
 label-indicator-padding = 2
 label-indicator-margin = 1
@@ -499,14 +530,14 @@ label-indicator-background = ${colors.secondary}
 type = internal/memory
 interval = 2
 format-prefix = "RAM "
-format-prefix-foreground = ${colors.primary}
+format-prefix-foreground = ${colors.red}
 label = %percentage_used:2%%
 
 [module/cpu]
 type = internal/cpu
 interval = 2
 format-prefix = "CPU "
-format-prefix-foreground = ${colors.primary}
+format-prefix-foreground = ${colors.red}
 label = %percentage:2%%
 
 [network-base]
@@ -519,12 +550,32 @@ label-disconnected = %{F#F0C674}%ifname%%{F#707880} disconnected
 [module/wlan]
 inherit = network-base
 interface-type = wireless
-label-connected = %{F#F0C674} %{F-} %essid% 
+; label-connected = %{F#F0C674} %{F-} %essid% 
+; label-connected =   %essid% 
+label-connected = %essid% 
+format-connected = <ramp-signal> <label-connected>
+
+label-connected-foreground = ${colors.lavender}
+; label-connected-background = ${colors.mantle}
+
+
+; there has to be better formatting
+; lavender = #b4befe
+ramp-signal-0 = "%{F#b4befe}󰤯 %{F-}"
+ramp-signal-1 = "%{F#b4befe}󰤟 %{F-}"
+ramp-signal-2 = "%{F#b4befe}󰤢 %{F-}"
+ramp-signal-3 = "%{F#b4befe}󰤥 %{F-}"
+ramp-signal-4 = "%{F#b4befe}󰤨 %{F-}"
 
 [module/eth]
 inherit = network-base
 interface-type = wired
-label-connected = %{F#F0C674}%ifname%%{F-}
+
+; there has to be a better way..
+; green = #a6e3a1
+label-connected = %{F#a6e3a1}%ifname%%{F-}
+format-connected = <label-connected>
+format-disconnected = ""
 
 [module/date]
 type = internal/date
