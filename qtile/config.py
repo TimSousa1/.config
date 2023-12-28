@@ -33,7 +33,8 @@ mod = "mod4"
 terminal = guess_terminal()
 
 dmenu_background = "#181825" # catppuccin mantle
-dmenu_highlight = "#fab387"  # catppuccin peach
+# dmenu_highlight = "#fab387"  # catppuccin peach
+dmenu_highlight = "#b4befe"  # catppuccin lavender
 dmenu_fontsize = "22"
 
 import os
