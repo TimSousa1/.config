@@ -44,15 +44,17 @@ secmon() {
     xrandr --output HDMI-0 --mode 1920x1080 --rate 60 --$1 eDP-1-2
 }
 
+alias smr='secmon right-of'
+alias sml='secmon left-of'
+
 # Load version control information
-autoload -Uz vcs_info
-precmd() { vcs_info }
-
+#autoload -Uz vcs_info
+#precmd() { vcs_info }
 # Format the vcs_info_msg_0_ variable
-zstyle ':vcs_info:git:*' formats '%F{yellow}( %b)%f'
+#zstyle ':vcs_info:git:*' formats '%F{yellow}( %b)%f'
 
-setopt PROMPT_SUBST
-PS1='%B%F{brblack}[%F{red}%n%f@%F{magenta}%m %F{cyan}%~%F{brblack}]${vcs_info_msg_0_}%F{green}$ %f%b' 
+#setopt PROMPT_SUBST
+#PS1='%B%F{brblack}[%F{red}%n%f@%F{magenta}%m %F{cyan}%~%F{brblack}]${vcs_info_msg_0_}%F{green}$ %f%b' 
 
 export EDITOR=nvim
 
