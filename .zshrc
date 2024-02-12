@@ -99,6 +99,7 @@ zstyle :compinstall filename '/home/tim/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+plugins=(git ssh-agent)
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
