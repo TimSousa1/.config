@@ -1,0 +1,11 @@
+import = ["/home/tim/.config/alacritty/catppuccin/catppuccin-mocha.toml"]
+
+[env]
+WINIT_X11_SCALE_FACTOR = "1.1"
+
+[font]
+size = 18.0
+
+[font.normal]
+family = "Inconsolata"
+style = "Regular"
